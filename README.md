@@ -15,5 +15,8 @@ To see the project at work just copy the repository to your local server and exp
 ### **Tech Stack**
 The project is powered by AFrame.
 
+### **Disclaimer**
+This project was created to show possibilities of webVR in streaming videos from Youtube and is intended for experimentation purposes only!
+
 ### **Demo**
 To see the application at work: [Demo application](https://gltf-exporter.glitch.me/)
