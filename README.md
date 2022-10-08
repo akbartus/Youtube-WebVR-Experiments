@@ -1,7 +1,5 @@
 # WebVR Experiments with YouTube
 
-<img alt="Screenshot" src="img/screenshot.jpg" width="600">
-
 ### **Description / Rationale**
 This is a project, consisting of several YouTube related experiments. They show the possibilities of web VR in streaming YouTube videos. In particular the following are available:
 1. Streaming simple Youtube videos directly into web VR with the help of slightly modified<a href="https://github.com/thelevicole/youtube-to-html5-loader">Youtube to HTML5 Loader</a>. See: index.html.  
@@ -19,4 +17,4 @@ The project is powered by AFrame.
 This project was created to show possibilities of webVR in streaming videos from Youtube and is intended for experimentation purposes only!
 
 ### **Demo**
-To see the application at work: [Demo application](https://gltf-exporter.glitch.me/)
+To see the application at work: [Demo application](https://youtube-experiments.glitch.me/)
