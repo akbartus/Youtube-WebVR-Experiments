@@ -1,0 +1,83 @@
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="js/YouTubeToHtml5.min.js"></script>
+    <title>Youtube Video in AFrame: Simple Videos</title>
+</head>
+<body>
+    <video data-yt2html5="" style="display:none"></video>
+    <input type="text" id="myText" value="Enter Youtube URL" size="40" onclick="reset()"
+        style="position: absolute; z-index: 3; left: 50%; bottom: 60px; transform: translate(-50%, -50%); margin: 0 auto;">
+    <button type="button" onclick="addUrl()"
+        style="position: absolute; z-index: 3; left: 50%; bottom: 20px; transform: translate(-50%, -50%); margin: 0 auto;">Open</button>
+    <a-scene renderer="colorManagement: false; physicallyCorrectLights: false; antialias: true;">
+        <a-assets>
+            <video id="tempVideo" src="" crossorigin="anonymous"></video>
+            <a-asset-item id="cinema" src="obj/cinema.gltf"></a-asset-item>
+        </a-assets>
+        <a-entity gltf-model="#cinema" position="0 0 2">
+            <a-plane width="16" height="9" position="0 2 -15" color="gray"></a-plane>
+            <a-entity id="playButton" class="clickable" position="-2 -2.8 -14"
+                geometry="primitive: plane; height: 1; width: 1.2" text="value: Play; align: center; width: 10; color: orange"
+                material="color: black; opacity: 1; alpha-test: 0.5"></a-entity>
+            <a-entity id="pauseButton" class="clickable" position="0 -2.8 -14"
+                geometry="primitive: plane; height: 1; width: 1.5" text="value: Pause; align: center; width: 10; color: orange"
+                material="color: black; opacity: 1; alpha-test: 0.5"></a-entity>
+            <a-entity id="stopButton" class="clickable" position="2 -2.8 -14"
+                geometry="primitive: plane; height: 1; width: 1.2" text="value: Stop; align: center; width: 10; color: orange"
+                material="color: black; opacity: 1; alpha-test: 0.5"></a-entity>
+        </a-entity>
+        <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable;"></a-entity>
+        <a-entity laser-controls="hand: left" raycaster="objects: .clickable;"></a-entity>
+        <!-- <a-entity laser-controls="hand: right" raycaster="objects: .clickable;"></a-entity> -->
+        <a-sky color="#000"></a-sky>
+    </a-scene>
+</body>
+<script>
+    // Variables
+    // Button
+    var playVideo = document.querySelector("#playButton");
+    var pauseVideo = document.querySelector("#pauseButton");
+    var stopVideo = document.querySelector("#stopButton");
+    // Video
+    var videoSource = document.querySelector("video");
+    var tempVideo = document.querySelector("#tempVideo");
+    var videoHolder = document.querySelector("a-plane");
+    function reset() {
+        document.getElementById("myText").value = "";
+    }
+    function addUrl() {
+        var x = document.getElementById("myText").value;
+        videoSource.setAttribute("data-yt2html5", x);
+
+        const controller = new YouTubeToHtml5({
+            withAudio: true, // Filter streams to those with audio channels
+            formats: ['1080p', '720p']
+        });
+        controller.addFilter('request.url', function (url) {
+            return `${url}&cache_bust=${(new Date()).getTime()}`;
+        });
+        controller.load();
+        console.log(videoSource);
+        // Pre load video source to temp video
+        setTimeout(() => {
+            var src = "https://cors-anywhere.herokuapp.com/" + videoSource.src;
+            tempVideo.setAttribute("src", src);
+            videoHolder.setAttribute("color", "")
+            videoHolder.setAttribute("src", "#tempVideo");
+            tempVideo.play();
+        }, 3000);
+    }
+    playVideo.addEventListener("click", function () {
+        tempVideo.play();
+    })
+    pauseVideo.addEventListener("click", function () {
+        tempVideo.pause();
+    })
+    stopVideo.addEventListener("click", function () {
+        tempVideo.pause();
+        tempVideo.currentTime = 0;
+    })
+</script>
+
+</html>

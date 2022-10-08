@@ -1,0 +1,59 @@
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="js/YouTubeToHtml5.min.js"></script>
+    <title>Youtube Video in AFrame: 360 Videos</title>
+</head>
+<body>
+    <video data-yt2html5="https://www.youtube.com/watch?v=ny62zkZwszU" style="display:none"></video>    <a-scene>
+        <a-assets>
+            <video id="tempVideo" crossorigin="anonymous"></video>
+        </a-assets>
+        <a-videosphere rotation="0 -90 0"></a-videosphere>
+        <a-entity id="playButton" class="clickable" position="-1.5 -0.5 -3" geometry="primitive: plane; height: 0.3"
+            text="value: Play; align: center; width: 3;" material="color: black"></a-entity>
+        <a-entity id="pauseButton" class="clickable" position="0 -0.5 -3" geometry="primitive: plane; height: 0.3"
+            text="value: Pause; align: center; width: 3;" material="color: blue"></a-entity>
+        <a-entity id="stopButton" class="clickable" position="1.5 -0.5 -3" geometry="primitive: plane; height: 0.3;"
+            text="value: Stop; align: center; width: 3;" material="color: black"></a-entity>
+        <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable;"></a-entity>
+    </a-scene>
+</body>
+<script>
+    // Variables
+    // Button
+    var playVideo = document.querySelector("#playButton");
+    var pauseVideo = document.querySelector("#pauseButton");
+    var stopVideo = document.querySelector("#stopButton");
+    // Video
+    var videoSource = document.querySelector("video");
+    var tempVideo = document.querySelector("#tempVideo");
+    var videoHolder = document.querySelector("a-videosphere");
+    const controller = new YouTubeToHtml5({
+        // Filter streams to those with audio channels
+         withAudio: true,
+        formats: ["1080p", "720p"]
+    });
+    controller.addFilter('request.url', function (url) {
+        return `${url}&cache_bust=${(new Date()).getTime()}`;
+    });
+    controller.load();
+    // Pre load video source to temp video
+    setTimeout(() => {
+        var src = "https://cors-anywhere.herokuapp.com/" + videoSource.src;
+        tempVideo.setAttribute("src", src)
+    }, 2000);
+    playVideo.addEventListener("click", function () {
+        tempVideo.play();
+        videoHolder.setAttribute("src", "#tempVideo");
+    })
+    pauseVideo.addEventListener("click", function () {
+        tempVideo.pause();
+    })
+    stopVideo.addEventListener("click", function () {
+        tempVideo.pause();
+        tempVideo.currentTime = 0;
+    })
+</script>
+
+</html>
