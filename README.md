@@ -8,7 +8,10 @@ This is a project, consisting of several YouTube related experiments. They show 
 4. Streaming Youtube videos using CSS3D made available through <a href="https://github.com/ryota-mitarai/aframe-websurfaces">AFrame Websurfaces component</a>. Please note that it does not support VR mode. See: YoutubeWebSurfaces.html. 
 
 ### **Instructions**
-To see the project at work just copy the repository to your local server and explore all the functionality. For reference, please see the code or original components/repositories.
+To see the project at work just copy the repository to your local server and explore all the functionality. For reference, please see the code or original components/repositories. To open experiments on Glitch.com, just add html page after the main URL, like below:
+```
+https://youtube-experiments.glitch.me/YoutubeWebSurfaces.html
+```
 
 ### **Tech Stack**
 The project is powered by AFrame.
