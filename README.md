@@ -18,6 +18,3 @@ The project is powered by AFrame.
 
 ### **Disclaimer**
 This project was created to show possibilities of webVR in streaming videos from Youtube and is intended for experimentation purposes only!
-
-### **Demo**
-To see the application at work: [Demo application](https://youtube-experiments.glitch.me/)
